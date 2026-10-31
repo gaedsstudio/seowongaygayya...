@@ -32,7 +32,8 @@ export function buildFloor() {
     drawFrame(g, Math.random() < 0.05 ? 'wall_banner_red' : 'wall_mid', FLOOR_PAD + x, FLOOR_PAD - T, { anchorX: 0, anchorY: 0 });
   }
   // 장식: 해골, 웅덩이
-  for (let i = 0; i < 140; i++) {
+  const decoCount = Math.round((140 * W * H) / (1600 * 1600)); // 1600x1600 기준 140개 밀도
+  for (let i = 0; i < decoCount; i++) {
     const x = FLOOR_PAD + 20 + Math.random() * (W - 40);
     const y = FLOOR_PAD + 20 + Math.random() * (H - 40);
     g.globalAlpha = 0.6;
