@@ -59,7 +59,7 @@ export const HEROES = {
     ai: 'healer', heal: 10, altarBias: 0.1,
   },
   paladin: {
-    name: '성기사', sprite: 'knight_f', scale: 1.15,
+    name: '성기사', sprite: 'knight_f',
     hp: 60, speed: 26, damage: 9, range: 9, attackCd: 1.2, radius: 6, xp: 4,
     ai: 'melee', altarBias: 0.25, knockResist: 0.5,
     // 방패 오라: 주변 용사가 잠시 받는 피해 -40%
