@@ -111,7 +111,8 @@ meteor(game, u, a) {
 ```
 
 - `u.side`가 `'hero'`면 용사 편, `'evil'`이면 타락해서 아군이 된 상태입니다. `enemiesOf(u.side, …)`를 쓰면 타락한 뒤에도 알아서 반대편을 공격합니다.
-- 지금 있는 패턴: `spread`(부채꼴), `ring`(원형 탄막), `dash`(돌진), `slash`(광역 베기), `heal_wave`(회복), `summon`(부하 소환. 용사 편일 때만)
+- 지금 있는 패턴: `spread`(부채꼴), `ring`(원형 탄막), `dash`(돌진), `slash`(광역 베기), `heal_wave`(회복), `shield_aura`(같은 편 보호막: `radius`, `duration`, `damageTakenMul`), `summon`(부하 소환. 용사 편일 때만)
+- `abilities`는 보스가 아닌 일반 용사에게도 붙일 수 있습니다 (예: 성기사의 `shield_aura`).
 
 ## 5. 유물(패시브) 추가: `src/data/skills.js`의 `PASSIVES`
 

@@ -58,6 +58,13 @@ export const HEROES = {
     hp: 20, speed: 28, damage: 0, range: 90, attackCd: 3.0, radius: 5, xp: 3,
     ai: 'healer', heal: 10, altarBias: 0.1,
   },
+  paladin: {
+    name: '성기사', sprite: 'knight_f', scale: 1.15,
+    hp: 60, speed: 26, damage: 9, range: 9, attackCd: 1.2, radius: 6, xp: 4,
+    ai: 'melee', altarBias: 0.25, knockResist: 0.5,
+    // 방패 오라: 주변 용사가 잠시 받는 피해 -40%
+    abilities: [{ type: 'shield_aura', cd: 5, radius: 48, duration: 3, damageTakenMul: 0.6 }],
+  },
 
   // ── 보스: 용사 파티 ──────────────────────────────────────────
   silva: {

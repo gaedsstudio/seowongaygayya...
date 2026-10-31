@@ -19,13 +19,13 @@ export const SPAWN_PHASES = [
   { from: 30, interval: 0.9, batch: 3, max: 50, mix: { squire: 7, scout: 4, archer: 2 } },
   { from: 75, interval: 0.8, batch: 3, max: 70, mix: { squire: 6, lancer: 2, scout: 3, archer: 3 } },
   { from: 120, interval: 0.7, batch: 4, max: 100, mix: { squire: 5, lancer: 3, scout: 3, archer: 3, mage: 2, priest: 1 } },
-  { from: 180, interval: 0.6, batch: 4, max: 130, mix: { squire: 3, lancer: 4, guardian: 2, scout: 3, archer: 3, mage: 2, priest: 1 } },
-  { from: 240, interval: 0.55, batch: 5, max: 170, mix: { lancer: 4, guardian: 2, berserker: 2, scout: 2, archer: 3, mage: 3, priest: 1 } },
-  { from: 300, interval: 0.5, batch: 5, max: 210, mix: { lancer: 4, guardian: 3, berserker: 3, scout: 2, archer: 3, mage: 3, priest: 2 } },
-  { from: 390, interval: 0.45, batch: 6, max: 260, mix: { lancer: 4, guardian: 3, berserker: 4, archer: 4, mage: 4, priest: 2 } },
-  { from: 480, interval: 0.4, batch: 6, max: 320, mix: { lancer: 4, guardian: 4, berserker: 4, archer: 4, mage: 4, priest: 2 } },
-  { from: 540, interval: 0.35, batch: 7, max: 380, mix: { lancer: 4, guardian: 4, berserker: 5, archer: 5, mage: 5, priest: 3 } },
-  { from: 600, interval: 0.4, batch: 6, max: 300, mix: { lancer: 5, guardian: 3, berserker: 4, archer: 4, mage: 4, priest: 3 } },
+  { from: 180, interval: 0.6, batch: 4, max: 130, mix: { squire: 3, lancer: 4, guardian: 2, paladin: 1, scout: 3, archer: 3, mage: 2, priest: 1 } },
+  { from: 240, interval: 0.55, batch: 5, max: 170, mix: { lancer: 4, guardian: 2, paladin: 2, berserker: 2, scout: 2, archer: 3, mage: 3, priest: 1 } },
+  { from: 300, interval: 0.5, batch: 5, max: 210, mix: { lancer: 4, guardian: 3, paladin: 2, berserker: 3, scout: 2, archer: 3, mage: 3, priest: 2 } },
+  { from: 390, interval: 0.45, batch: 6, max: 260, mix: { lancer: 4, guardian: 3, paladin: 3, berserker: 4, archer: 4, mage: 4, priest: 2 } },
+  { from: 480, interval: 0.4, batch: 6, max: 320, mix: { lancer: 4, guardian: 4, paladin: 3, berserker: 4, archer: 4, mage: 4, priest: 2 } },
+  { from: 540, interval: 0.35, batch: 7, max: 380, mix: { lancer: 4, guardian: 4, paladin: 3, berserker: 5, archer: 5, mage: 5, priest: 3 } },
+  { from: 600, interval: 0.4, batch: 6, max: 300, mix: { lancer: 5, guardian: 3, paladin: 2, berserker: 4, archer: 4, mage: 4, priest: 3 } },
 ];
 
 export const EVENTS = [
