@@ -22,6 +22,7 @@ import {
   buildFloor, FLOOR_PAD, dropGem, updateGems, drawGems,
   addCorpse, updateCorpses, drawCorpses, updatePools, drawPools,
 } from './systems/world.js';
+import { createSites, insertSites, updateSites, damageSite, drawSiteMarkers } from './systems/sites.js';
 import { drawHud } from './ui/hud.js';
 
 const MASS_POSSESSION = { radius: 120, duration: 15, max: 40 };
@@ -72,6 +73,7 @@ export class Game {
     this.corpses = [];
     this.pools = [];
     this.pendingFallen = [];
+    createSites(this);
     this.fx = new Effects();
     this.spawner = new Spawner();
     this.cam = { x: this.player.x, y: this.player.y };
@@ -240,6 +242,7 @@ export class Game {
       }
       return;
     }
+    if (t.kind === 'site') { damageSite(this, t, dmg, opts); return; }
     t.hp -= dmg;
     t.hitFlash = 0.08;
     const kr = 1 - (t.def.knockResist || 0);
@@ -347,6 +350,7 @@ export class Game {
       if (u.side === 'hero') this.heroGrid.insert(u);
       else this.allyGrid.insert(u);
     }
+    insertSites(this);
 
     // 플레이어 이동
     const ax = moveAxis();
@@ -386,6 +390,7 @@ export class Game {
     if (consumePress('Space') && this.ult >= 100) this.massPossession();
 
     this.spawner.update(this, dt);
+    updateSites(this, dt);
     updateSkills(this, dt);
     updateUnits(this, dt);
     separate(this);
@@ -449,6 +454,7 @@ export class Game {
     if (sw > 0 && sh > 0) ctx.drawImage(this.floor, sx, sy, sw, sh, sx - FLOOR_PAD, sy - FLOOR_PAD, sw, sh);
 
     if (this.altar.alive) this.altar.drawGround(ctx, this.time);
+    for (const s of this.sites) if (s.alive) s.drawGround(ctx, this.time);
     drawPools(ctx, this);
     drawSkillsGround(ctx, this);
     drawCorpses(ctx, this);
@@ -477,6 +483,9 @@ export class Game {
     }
     ents.push(this.player);
     if (this.altar.alive) ents.push(this.altar);
+    for (const s of this.sites) {
+      if (s.alive && Math.abs(s.x - this.cam.x) <= this.viewW / 2 + margin && Math.abs(s.y - this.cam.y) <= this.viewH / 2 + 80) ents.push(s);
+    }
     ents.sort((a, b) => a.y - b.y);
     for (const e of ents) e.draw(ctx, this.time);
 
@@ -495,6 +504,7 @@ export class Game {
     if (this.state === 'title') return; // 타이틀에서는 배경만
     this.fx.drawScreen(ctx, this.toScreen, z);
     drawHud(ctx, this);
+    drawSiteMarkers(ctx, this);
 
     if (this.fx.flashT > 0) {
       ctx.globalAlpha = this.fx.flashT * 1.2;

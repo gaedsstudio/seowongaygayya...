@@ -8,8 +8,8 @@ export const CONFIG = {
 
   // 아레나(던전) 크기 (게임 픽셀). 타일 1칸 = 16px
   TILE: 16,
-  ARENA_W: 1600,
-  ARENA_H: 1600,
+  ARENA_W: 2400,
+  ARENA_H: 2400,
 
   // 한 판 길이(초). 이 시간에 최종 보스(용사 파티)가 등장
   FINAL_WAVE_AT: 600,

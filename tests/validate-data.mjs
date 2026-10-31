@@ -9,6 +9,7 @@ import { MINIONS } from '../src/data/minions.js';
 import { SKILLS, PASSIVES, STARTING_SKILLS, FALLBACK_REWARDS } from '../src/data/skills.js';
 import { SPAWN_PHASES, EVENTS } from '../src/data/waves.js';
 import { PROJECTILES } from '../src/data/projectiles.js';
+import { SITE_TYPES, SITE_LAYOUT } from '../src/data/sites.js';
 import { ABILITIES } from '../src/systems/abilities.js';
 import { SKILL_IMPL } from '../src/systems/skills.js';
 import { CONFIG } from '../src/config.js';
@@ -83,8 +84,19 @@ for (const e of EVENTS) {
   if (!['swarm', 'raid', 'boss', 'final'].includes(e.type)) err(`waves: event@${e.at} 알 수 없는 type '${e.type}'`);
 }
 
+for (const [id, d] of Object.entries(SITE_TYPES)) {
+  const w = `sites.${id}`;
+  if (!['capture', 'destroy', 'loot'].includes(d.kind)) err(`${w}: 알 수 없는 kind '${d.kind}'`);
+  for (const h in { ...d.summonMix, ...d.guards }) if (!HEROES[h]) err(`${w}: 없는 용사 id '${h}'`);
+  if (d.kind === 'destroy' && !(d.hp > 0)) err(`${w}: hp 는 양수여야 함`);
+}
+for (const s of SITE_LAYOUT) {
+  if (!SITE_TYPES[s.type]) err(`sites: 배치의 '${s.type}' 없음`);
+  if (!(s.x > 0 && s.x < 1 && s.y > 0 && s.y < 1)) err(`sites: '${s.type}' 위치는 0~1 비율이어야 함`);
+}
+
 if (errors.length) {
   console.error(`데이터 검증 실패 (${errors.length})\n - ` + errors.join('\n - '));
   process.exit(1);
 }
-console.log(`데이터 검증 통과: 용사 ${Object.keys(HEROES).length}, 마물 ${Object.keys(MINIONS).length}, 주문 ${Object.keys(SKILLS).length}, 유물 ${Object.keys(PASSIVES).length}, 이벤트 ${EVENTS.length}`);
+console.log(`데이터 검증 통과: 용사 ${Object.keys(HEROES).length}, 마물 ${Object.keys(MINIONS).length}, 주문 ${Object.keys(SKILLS).length}, 유물 ${Object.keys(PASSIVES).length}, 이벤트 ${EVENTS.length}, 유적 ${SITE_LAYOUT.length}`);

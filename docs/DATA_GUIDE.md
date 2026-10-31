@@ -136,6 +136,14 @@ bone_armor: {
   - `final` `{ ids: [...], msg }`
 - 새 이벤트 타입은 `src/systems/spawner.js`의 `runEvent`에 `case`를 추가합니다.
 
+## 6.1 유적(맵 오브젝트): `src/data/sites.js`
+
+- `SITE_TYPES`: 유적 종류. `kind`가 동작을 정한다 (`capture` 점령, `destroy` 파괴, `loot` 수호대 처치 후 획득). 수치 필드는 파일 맨 위 주석 참고
+- `reward`: `{ xp, gems, ult, heal, levelUps }` 중 필요한 것만
+- `SITE_LAYOUT`: `{ type, x, y }`. x, y는 아레나 크기에 대한 **비율(0~1)** 이라 아레나 크기를 바꿔도 배치가 유지된다
+- 첨탑의 `summonMix`, 보물고의 `guards`는 `heroes.js`의 id를 쓴다 (`validate-data.mjs`가 확인)
+- 새 `kind`는 `src/systems/sites.js`의 `updateSites`와 `Site.draw`에 분기를 추가한다
+
 ## 7. 발사체 외형: `src/data/projectiles.js`
 
 ```js
