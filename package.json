@@ -1,0 +1,17 @@
+{
+  "name": "possession-defense",
+  "version": "0.1.0",
+  "private": true,
+  "description": "포제션 디펜스: 용사 파티를 토벌하는 네크로맨서 서바이벌 디펜스 (HTML5 Canvas)",
+  "type": "module",
+  "scripts": {
+    "start": "node tools/serve.mjs",
+    "test": "node tests/validate-data.mjs && node tests/smoke.mjs 240",
+    "test:data": "node tests/validate-data.mjs",
+    "test:full": "node tests/validate-data.mjs && node tests/smoke.mjs 660",
+    "atlas": "python3 tools/build_atlas.py"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}
