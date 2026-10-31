@@ -1,11 +1,12 @@
 // ───────────────────────────────────────────────────────────────
-// DOM 오버레이 화면: 타이틀 / 레벨업 / 일시정지 / 결과
+// DOM 오버레이 화면: 타이틀 / 레벨업 / 일시정지 / 능력 도감 / 결과
 // 스타일은 style.css (디자인 토큰은 :root 변수)
 // ───────────────────────────────────────────────────────────────
 import { frameDataURL } from '../core/assets.js';
 import { formatTime } from '../core/util.js';
 import { rollUpgrades, describeUpgrade, applyUpgrade } from '../systems/skills.js';
 import { clearPresses } from '../core/input.js';
+import { CODEX_TABS, codexListHTML } from './codex.js';
 
 const $ = (sel) => document.querySelector(sel);
 
@@ -42,6 +43,7 @@ export class Screens {
         <h1 class="logo">포제션 디펜스</h1>
         <p class="tagline">용사 파티를 토벌하라. 네가 바로 마왕군의 네크로맨서다.</p>
         <button class="btn primary" id="btn-start">군단 일으키기</button>
+        <button class="btn" id="btn-codex">능력 도감</button>
         <div class="howto">
           <div><b>이동</b> WASD / 방향키 / 화면 드래그</div>
           <div><b>공격</b> 자동 시전 — 주문은 레벨업으로 고르세요</div>
@@ -52,6 +54,7 @@ export class Screens {
         </div>
       </div>`;
     $('#btn-start').onclick = () => this.onStart?.();
+    $('#btn-codex').onclick = () => this.showCodex(() => this.showTitle());
     this.setKeys((e) => {
       if (e.code === 'Enter' || e.code === 'Space') { e.preventDefault(); this.onStart?.(); }
     });
@@ -109,11 +112,35 @@ export class Screens {
         <h2>일시정지</h2>
         <p class="sub">${formatTime(game.time)} · 처치 ${game.kills} · 군단 ${game.armyCount()}</p>
         <button class="btn primary" id="btn-resume">계속하기</button>
+        <button class="btn" id="btn-codex">능력 도감</button>
         <button class="btn" id="btn-quit">타이틀로</button>
       </div>`;
     $('#btn-resume').onclick = onResume;
+    $('#btn-codex').onclick = () => this.showCodex(() => this.showPause(game, onResume, onQuit));
     $('#btn-quit').onclick = onQuit;
     this.setKeys((e) => { if (e.code === 'Escape' || e.code === 'KeyP') onResume(); });
+  }
+
+  /** 능력 도감. onBack: 닫을 때 돌아갈 화면 (타이틀 또는 일시정지) */
+  showCodex(onBack, tab = 'skills') {
+    const dim = this.root.classList.contains('dim');
+    this.clear();
+    this.root.className = dim ? 'show dim' : 'show';
+    const tabs = CODEX_TABS.map((t) => `<button class="codex-tab${t.id === tab ? ' on' : ''}" data-tab="${t.id}">${t.label}</button>`).join('');
+    this.root.innerHTML = `
+      <div class="panel codex-panel">
+        <h2>능력 도감</h2>
+        <p class="sub">레벨업 카드로 얻을 수 있는 주문과 유물</p>
+        <div class="codex-tabs">${tabs}</div>
+        <div class="codex-list">${codexListHTML(tab)}</div>
+        <button class="btn" id="btn-back">돌아가기</button>
+      </div>`;
+    this.root.querySelectorAll('.codex-tab').forEach((el) => (el.onclick = () => this.showCodex(onBack, el.dataset.tab)));
+    $('#btn-back').onclick = onBack;
+    this.setKeys((e) => {
+      if (e.code === 'Escape' || e.code === 'KeyP') { e.preventDefault(); onBack(); }
+      else if (e.code === 'Tab') { e.preventDefault(); this.showCodex(onBack, tab === 'skills' ? 'passives' : 'skills'); }
+    });
   }
 
   showResult(game) {
