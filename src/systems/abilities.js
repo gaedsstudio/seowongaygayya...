@@ -50,6 +50,16 @@ export const ABILITIES = {
     game.fx.ring(u.x, u.y - 6, 6, a.radius, COLORS.heal, 0.6, 2);
   },
 
+  /** 같은 편 보호막: duration 초 동안 받는 피해에 damageTakenMul 을 곱함 (game.damage 에서 적용) */
+  shield_aura(game, u, a) {
+    const allies = game.alliesOf(u.side, u.x, u.y, a.radius);
+    for (const o of allies) {
+      o.shieldUntil = game.time + a.duration;
+      o.shieldMul = a.damageTakenMul;
+    }
+    game.fx.ring(u.x, u.y - 6, 4, a.radius, COLORS.holy, 0.5, 2);
+  },
+
   /** 부하 소환 (용사 편일 때만 동작) */
   summon(game, u, a) {
     if (u.side !== 'hero') return;

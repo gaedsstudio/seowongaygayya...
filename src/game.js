@@ -213,6 +213,7 @@ export class Game {
   // ── 전투 ─────────────────────────────────────────────────────
   damage(t, amount, opts = {}) {
     if (!t.alive || this.state === 'over') return;
+    if (t.shieldUntil > this.time) amount *= t.shieldMul; // 성기사 방패 오라
     const dmg = Math.max(1, Math.round(amount));
     if (t.kind === 'player') {
       if (this.godMode) return;
