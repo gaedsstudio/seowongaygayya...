@@ -8,7 +8,7 @@
 | 레인 | 담당자 | 담당자의 AI |
 |---|---|---|
 | A: 시스템/엔진 | (이름) | (예: Claude Code) |
-| B: 콘텐츠/밸런스 | (이름) | |
+| B: 콘텐츠/밸런스 | hjh202602-blip | Claude Code |
 | C: 아트/UI/연출 | Leetaewon5028 | Claude Code |
 
 ---
